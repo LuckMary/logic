@@ -4,7 +4,7 @@
     list-style: none;
     border: 1px solid #cfcfe4;
     border-radius: 18px;
-    width: 240px;
+    min-width: 240px;
     height: 210px;
     padding: 11px;
     margin: 0;
@@ -27,6 +27,8 @@
     .row {
       margin-bottom: 18px;
       display: flex;
+      // background-color: red;
+
       &:first-child {
         display: none;
       }

@@ -10,7 +10,6 @@ function App() {
 
   useEffect(() => {
     getAPI();
-    setSelectedCourses(courses);
   }, []);
 
   const getAPI = async () => {
@@ -81,6 +80,13 @@ function App() {
                 <span>{course.name}</span>
               </div>
             ))}
+            {/* скрытые блоки курсов */}
+            {row.length < 3 && (
+              <div className="course" style={{ opacity: 0 }}></div>
+            )}
+            {row.length < 2 && (
+              <div className="course" style={{ opacity: 0 }}></div>
+            )}
           </div>
         ))}
       </div>
