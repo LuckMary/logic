@@ -1,24 +1,89 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import "./App.scss";
 
 function App() {
+  const [courses, setCourses] = useState<any[]>([]);
+  const [selectedTag, setSelectedTag] = useState("Все темы");
+  const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
+
+  useEffect(() => {
+    getAPI();
+    setSelectedCourses(courses);
+  }, []);
+
+  const getAPI = async () => {
+    try {
+      const response = await axios.request({
+        method: "GET",
+        url: "https://logiclike.com/docs/courses.json",
+      });
+      setCourses(response.data);
+      setSelectedCourses(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const tags = [
+    "Все темы",
+    "Логика и мышление",
+    "Загадки",
+    "Головоломки",
+    "Путешествия",
+  ];
+
+  const rows: any[] = selectedCourses
+    .map(
+      (course, index) =>
+        index % 3 === 0 && selectedCourses.slice(index, index + 3)
+    )
+    .filter(Boolean);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul>
+        {tags.map((tag) => (
+          <li
+            key={tag}
+            onClick={() => {
+              setSelectedTag(tag);
+              setSelectedCourses(
+                tag === "Все темы"
+                  ? courses
+                  : courses.filter((item) =>
+                      item.tags.find((el: any) =>
+                        tag === "Путешествия"
+                          ? el === "Страны и столицы"
+                          : el === tag
+                      )
+                    )
+              );
+            }}
+            {...(selectedTag === tag && { className: "selected" })}
+          >
+            {tag}
+          </li>
+        ))}
+      </ul>
+      <div className="courses">
+        <div className="row"> </div>
+        {rows.map((row, index) => (
+          <div key={index} className="row">
+            {row.map((course: any) => (
+              <div
+                key={course.id}
+                className="course"
+                style={{ backgroundColor: course.bgColor }}
+              >
+                <img src={course.image} alt="картинка для курса" />
+                <span>{course.name}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
