@@ -5,7 +5,7 @@
     border: 1px solid #cfcfe4;
     border-radius: 18px;
     min-width: 240px;
-    height: 210px;
+    height: 294px;
     padding: 11px;
     margin: 0;
     margin-right: 7px;
@@ -22,49 +22,45 @@
   }
   .courses {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     flex: 1;
-    .row {
+    min-width: 584px;
+
+    .course {
+      border-radius: 18px;
+      box-shadow: 0px 10px 13px -4px rgb(35, 35, 95, 0.19);
+      margin-left: 17px;
       margin-bottom: 18px;
+      height: 210px;
       display: flex;
-      // background-color: red;
-
-      &:first-child {
-        display: none;
+      flex: 1;
+      flex-direction: column;
+      min-width: 30%;
+      max-width: 32%;
+      img {
+        width: 144px;
+        padding: 9px 17px;
+        align-self: center;
       }
-
-      .course {
-        border-radius: 18px;
-        box-shadow: 0px 10px 13px -4px rgb(35, 35, 95, 0.19);
-        margin-left: 17px;
-        height: 210px;
+      span {
+        padding: 12px 18px;
+        line-height: 1;
         display: flex;
         flex: 1;
-        flex-direction: column;
-
-        img {
-          width: 144px;
-          padding: 9px 17px;
-          align-self: center;
-        }
-        span {
-          padding: 12px 18px;
-          line-height: 1;
-          display: flex;
-          flex: 1;
-          background-color: white;
-          border-bottom-left-radius: 18px;
-          border-bottom-right-radius: 18px;
-        }
+        background-color: white;
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 18px;
       }
     }
   }
 }
-
-@media (max-width: 1024px) {
-  .tallrow {
-    .course {
-      min-height: 228px;
-    }
+@media (max-width: 1044px) {
+  .course {
+    min-height: 228px;
+  }
+}
+@media (max-width: 1250px) {
+  .course {
+    max-width: 30% !important;
   }
 }
