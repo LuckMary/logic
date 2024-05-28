@@ -69,7 +69,13 @@ function App() {
       <div className="courses">
         <div className="row"> </div>
         {rows.map((row, index) => (
-          <div key={index} className="row">
+          <div
+            key={index}
+            className="row"
+            {...(row.find((course: any) => course.name.length > 13) && {
+              className: "row tallrow",
+            })}
+          >
             {row.map((course: any) => (
               <div
                 key={course.id}
