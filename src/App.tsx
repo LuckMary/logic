@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+
+import Menu from "./components/Menu";
+import Course from "./components/Course";
 
 import "./App.scss";
 
@@ -14,7 +17,7 @@ interface ICourse {
 function App() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [selectedTag, setSelectedTag] = useState<string>();
+  const [selectedTag, setSelectedTag] = useState<string>("");
 
   useEffect(() => {
     getCourses();
@@ -27,7 +30,6 @@ function App() {
       );
 
       setCourses(data);
-
       setTags([...new Set(data.map((course) => course.tags).flat())]);
     } catch (error) {
       console.error(error);
@@ -36,40 +38,17 @@ function App() {
 
   return (
     <div className="App">
-      <ul>
-        <li
-          onClick={() => {
-            setSelectedTag("");
-          }}
-          {...(!selectedTag && { className: "selected" })}
-        >
-          Все темы
-        </li>
-        {tags.map((tag) => (
-          <li
-            key={tag}
-            onClick={() => {
-              setSelectedTag(tag);
-            }}
-            {...(selectedTag === tag && { className: "selected" })}
-          >
-            {tag}
-          </li>
-        ))}
-      </ul>
+      <Menu
+        tags={tags}
+        selectedTag={selectedTag}
+        setSelectedTag={setSelectedTag}
+      />
       <div className="courses">
         {(selectedTag
           ? courses.filter((item) => item.tags.includes(selectedTag))
           : courses
         ).map((course) => (
-          <div
-            key={course.id}
-            className="course"
-            style={{ backgroundColor: course.bgColor }}
-          >
-            <img src={course.image} alt="картинка для курса" />
-            <span>{course.name}</span>
-          </div>
+          <Course course={course} />
         ))}
       </div>
     </div>
