@@ -1,4 +1,8 @@
-const Course = ({ course }: { course: any }) => {
+interface Props {
+  course: any;
+}
+
+const Course: React.FC<Props> = ({ course }) => {
   return (
     <div
       key={course.id}

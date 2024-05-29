@@ -1,12 +1,10 @@
-const Menu = ({
-  tags,
-  selectedTag,
-  setSelectedTag,
-}: {
+interface Props {
   tags: string[];
   selectedTag: string;
   setSelectedTag: any;
-}) => {
+}
+
+const Menu: React.FC<Props> = ({ tags, selectedTag, setSelectedTag }) => {
   return (
     <ul>
       <li
